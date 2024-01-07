@@ -1,0 +1,60 @@
+{
+  "name": "fullstackopen-part4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
+    "lint": "eslint .",
+    "lint:ui": "cd frontend/ && npm run eslint",
+    "lint:both": "npm run lint && npm run lint:ui",
+    "start:test": "cross-env NODE_ENV=test node index.js",
+    "build:ui": "rm -rf build && cd frontend/ && npm run build && cp -r build ../ && cd ..",
+    "test:both": "npm run test && npm run test:ui",
+    "test:ui": "cd frontend/ && npm test",
+    "test:cypress": "cd frontend/ && npm run test:e2e"
+  },
+  "engines": {
+    "node": ">=16.19.1 <17.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuhoSiitonen/Bloglistapp.git"
+  },
+  "author": "Juho Siitonen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JuhoSiitonen/Bloglistapp/issues"
+  },
+  "homepage": "https://github.com/JuhoSiitonen/Bloglistapp#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^9.0.0",
+    "lodash": "^4.17.21",
+    "mongoose": "^7.2.2",
+    "pg": "^8.11.3",
+    "sequelize": "^6.35.2"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2",
+    "jest": "^29.5.0",
+    "nodemon": "^2.0.22",
+    "supertest": "^6.3.3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "globalTeardown": "./tests/teardown.js",
+    "testPathIgnorePatterns": [
+      "<rootDir>/frontend/",
+      "<rootDir>/node_modules/"
+    ]
+  }
+}
