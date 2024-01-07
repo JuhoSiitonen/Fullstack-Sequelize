@@ -34,7 +34,9 @@ const App = () => {
 
   useEffect(() => {
     dispatch(isUserLogged())
-    userService.getAll().then((response) => setUsers(response))
+    userService.getAll().then((response) => {
+      setUsers(response)
+    })
   }, [])
 
   const handleLogin = async (event) => {
