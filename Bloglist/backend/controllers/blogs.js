@@ -53,4 +53,52 @@ blogsRouter.delete("/:id", userExtractor, async (request, response) => {
   } 
 });
 
+blogsRouter.post("/:id/comments", async (request, response) => {
+  const body = request.body;
+  const blog = await Blog.findByPk(request.params.id);
+  if (!blog) {
+    return response.status(404).end();
+  }
+
+  const comment = await Comment.create({
+    content: body.content,
+    blogId: request.params.id,
+  });
+  response.status(201).json(comment);
+});
+
+blogsRouter.get("/:id/comments", async (request, response) => {
+  const blog = await Blog.findByPk(request.params.id);
+  if (!blog) {
+    return response.status(404).end();
+  }
+
+  const comments = await Comment.findAll({
+    where: {
+      blogId: request.params.id,
+    },
+  });
+  response.status(200).json(comments);
+});
+
+blogsRouter.put("/:id", async (request, response) => {
+  const blog = await Blog.findByPk(request.params.id);
+  if (!blog) {
+    return response.status(404).end();
+  }
+
+  const updatedBlog = await Blog.update(
+    {
+      likes: blog.likes + 1,
+    },
+    {
+      where: {
+        id: request.params.id,
+      },
+    }
+  );
+  response.status(200).json(updatedBlog);
+});
+
+
 module.exports = blogsRouter;

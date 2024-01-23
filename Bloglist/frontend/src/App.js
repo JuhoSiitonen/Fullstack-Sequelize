@@ -72,10 +72,10 @@ const App = () => {
   }
 
   const match = useMatch('/users/:id')
-  const userToSee = match ? users.find((n) => n.id === match.params.id) : null
+  const userToSee = match ? users.find((n) => n.id === Number(match.params.id)) : null
 
   const match2 = useMatch('/blogs/:id')
-  const blogToSee = match2 ? blogs.find((n) => n.id === match2.params.id) : null
+  const blogToSee = match2 ? blogs.find((n) => n.id === Number(match2.params.id)) : null
 
   if (user === null) {
     return (
