@@ -7,12 +7,23 @@ const { Op } = require('sequelize')
 
 blogsRouter.get("/", async (request, response) => {
   try {
-    const where = {}
-    if (request.query.search) {
-      where.title = {
-        [Op.substring]: request.query.search
-      }
-    }
+    const { search } = request.query 
+    const where = {} 
+
+  if (search) {
+    where[Op.or] = [
+      {
+        title: {
+          [Op.iLike]: `%${search}%`
+        }
+      },
+      {
+        author: {
+          [Op.iLike]: `%${search}%`
+        }
+      },
+    ]
+  }
     const blogs = await Blog.findAll({
       include: [
         {
@@ -20,7 +31,8 @@ blogsRouter.get("/", async (request, response) => {
           attributes: ["username", "name", "id"],
         },
       ],
-      where
+      where,
+      order: [["likes", "DESC"]],
     });
     return response.status(200).json(blogs);
   } catch (error) {
