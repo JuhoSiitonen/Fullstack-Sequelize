@@ -27,6 +27,15 @@ userRouter.post('/', async (request, response) => {
   response.status(201).json(newUser)
 })
 
+userRouter.put('/:username', async (request, response) => {
+    const { username } = request.params
+
+    const user = await User.findOne({ where: { username: username } })
+    user.name = request.body.name
+    await user.save()
+
+    response.status(200).json(user)
+})
 
 
 module.exports = userRouter

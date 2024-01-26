@@ -10,7 +10,7 @@ blogsRouter.get("/", async (request, response) => {
       include: [
         {
           model: User,
-          attributes: ["username", "name"],
+          attributes: ["username", "name", "id"],
         },
       ],
     });
@@ -38,6 +38,10 @@ blogsRouter.delete("/:id", userExtractor, async (request, response) => {
   const checkIdBlog = await Blog.findByPk(request.params.id);
   if (!checkIdBlog) {
     return response.status(404).end();
+  }
+
+  if(checkIdBlog.userId !== request.user){
+    return response.status(401).json({ error: 'Unauthorized' })
   }
 
   try {

@@ -20,7 +20,7 @@ const Mainpage = ({ handleNewBlog, blogs }) => {
                 <td>
                   <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
                 </td>
-                <td>{blog.author}</td>
+                <td>{blog.user.username}</td>
               </tr>
             ))}
         </tbody>
