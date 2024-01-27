@@ -8,6 +8,7 @@ const blogsRouter = require('./controllers/blogs')
 const userRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const healthRouter = require('./controllers/health')
+const authorsRouter = require('./controllers/authors')
 const middleware = require('./utils/middleware')
 const { connectToDatabase } = require('./utils/db')
 
@@ -25,6 +26,7 @@ app.use(middleware.getTokenFrom)
 app.use('/api/login', loginRouter)
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', userRouter)
+app.use('/api/authors', authorsRouter)
 app.use('/health', healthRouter)
 
 if (process.env.NODE_ENV === 'test') {
