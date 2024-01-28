@@ -14,7 +14,8 @@
     "build:ui": "rm -rf build && cd frontend/ && npm run build && cp -r build ../ && cd ..",
     "test:both": "npm run test && npm run test:ui",
     "test:ui": "cd frontend/ && npm test",
-    "test:cypress": "cd frontend/ && npm run test:e2e"
+    "test:cypress": "cd frontend/ && npm run test:e2e",
+    "migration:down": "node util/rollback.js"
   },
   "engines": {
     "node": ">=16.19.1 <17.0.0"
@@ -39,7 +40,8 @@
     "lodash": "^4.17.21",
     "mongoose": "^7.2.2",
     "pg": "^8.11.3",
-    "sequelize": "^6.35.2"
+    "sequelize": "^6.35.2",
+    "umzug": "^3.5.1"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

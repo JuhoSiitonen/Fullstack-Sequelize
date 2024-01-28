@@ -4,7 +4,10 @@ const { User } = require('../models')
 const { Blog } = require('../models')
 
 userRouter.get('/', async (request, response) => {
-    const users = await User.findAll({ include: { model: Blog } })
+    const users = await User.findAll({ 
+      include: 
+      { model: Blog } ,
+    })
     return response.json(users)
 })
 
@@ -35,6 +38,34 @@ userRouter.put('/:username', async (request, response) => {
     await user.save()
 
     response.status(200).json(user)
+})
+
+userRouter.get('/:id', async (request, response) => {
+    const { id } = request.params
+    const { read } = request.query
+    const where = {}
+
+    if (read === 'true' || read === 'false') {
+        where.read = (read === 'true')
+    }
+
+    try {
+        const user = await User.findByPk(id, { 
+          include: 
+            { model: Blog,
+              as: 'reading',
+              through: {
+                as: 'readinglist',
+                attributes: ['read', 'id'],
+                where
+              },
+            },
+          })
+        response.status(200).json(user)
+    }
+    catch (error) {
+        response.status(400).json({ error: error.message })
+    }
 })
 
 
