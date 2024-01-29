@@ -2,6 +2,7 @@ const User = require('./user');
 const Blog = require('./blog');
 const Comment = require('./comment');
 const Readinglist = require('./readinglist');
+const Session = require('./session');
 
 
 User.hasMany(Blog);
@@ -25,6 +26,7 @@ module.exports = {
     User,
     Blog,
     Comment,
-    Readinglist
+    Readinglist,
+    Session
 };
 

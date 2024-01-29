@@ -25,6 +25,7 @@ userRouter.post('/', async (request, response) => {
     username: username,
     name: name,
     passwordHash: passwordHash,
+    disabled: false,
   })
 
   response.status(201).json(newUser)

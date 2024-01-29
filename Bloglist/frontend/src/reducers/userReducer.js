@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import loginService from '../services/login'
 import blogService from '../services/blogs'
+import logoutService from '../services/logout'
 import { addNotification } from './notificationReducer'
 
 const userSlice = createSlice({
@@ -44,8 +45,9 @@ export const isUserLogged = () => {
 }
 
 export const logout = () => {
-  return (dispatch) => {
+  return async dispatch => {
     window.localStorage.removeItem('loggedAppUser')
+    await logoutService.logout()
     dispatch(logoutUser())
     dispatch(addNotification('Logoff succesfull'))
   }

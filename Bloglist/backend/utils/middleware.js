@@ -1,5 +1,6 @@
 const logger = require('./logger')
 const jwt = require('jsonwebtoken')
+const Session = require('../models/session')
 
 
 const getTokenFrom = (request, response, next) => {
@@ -12,13 +13,28 @@ const getTokenFrom = (request, response, next) => {
   next()
 }
 
-const userExtractor = (request, response, next) => {
+const userExtractor = async (request, response, next) => {
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
   if (!decodedToken.id) {
     return response.status(401).json({ error: 'token invalid' })
   }else {
     request.user = decodedToken.id
   }
+  try {
+    const session = await Session.findOne({
+      where: {
+        token: request.token
+      }
+    })
+  }
+  catch (error) {
+    return response.status(401).json({ error: 'token invalid' })
+  }
+
+  if (!session) {
+    return response.status(401).json({ error: 'token invalid' })
+  }
+
   next()
 }
 
